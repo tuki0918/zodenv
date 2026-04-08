@@ -1,15 +1,15 @@
-# dotenv-zod-validator
+# @tuki0918/zodenv
 
 <p>
-<a href="https://www.npmjs.com/package/dotenv-zod-validator"><img src="https://img.shields.io/npm/v/dotenv-zod-validator"></a>
+<a href="https://www.npmjs.com/package/@tuki0918/zodenv"><img src="https://img.shields.io/npm/v/%40tuki0918%2Fzodenv"></a>
 </p>
 
-`dotenv-zod-validator` is a very lightweight, type-safe environment variable library using Zod.
+`@tuki0918/zodenv` is a very lightweight, type-safe environment variable library using Zod.
 
 ## Installation
 
 ```bash
-npm install dotenv-zod-validator
+npm install @tuki0918/zodenv
 ```
 
 ## Usage (Node)
@@ -26,7 +26,7 @@ __OTHER__="__other__"
 code
 
 ```typescript
-import { zenv } from "dotenv-zod-validator";
+import { zenv } from "@tuki0918/zodenv";
 
 const schema = zenv.object({
     NODE_ENV: zenv.enum(["development", "production", "test"]),
@@ -57,7 +57,7 @@ MY_SECRET="xyz"
 utils/dotenv.public.ts
 
 ```typescript
-import { zenv } from "dotenv-zod-validator";
+import { zenv } from "@tuki0918/zodenv";
 
 export const schema = zenv.object({
     NEXT_PUBLIC_MY_VALUE: zenv.string(),
@@ -72,7 +72,7 @@ export const ENV = zenv.validate(schema, {
 utils/dotenv.ts
 
 ```typescript
-import { zenv } from "dotenv-zod-validator";
+import { zenv } from "@tuki0918/zodenv";
 import { schema as publicSchema } from "@/utils/dotenv.public";
 
 const schema = zenv.object({
