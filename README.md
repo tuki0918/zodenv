@@ -101,12 +101,12 @@ import "@/utils/dotenv";
 | enum | Alias for `z.enum` | ❌️ | ❌️ | `invalid text` |
 | string | Alias for `z.string` | ❌️ | ✅️ | _ |
 | number | Converts to a number. | ❌️ | ❌️ | `invalid number` |
-| boolean | Converts to a boolean. (TRUE: `true`, `TRUE`, `1` / FALSE: `other`) | ❌️ | ❌️ | _ |
+| boolean | Converts to a boolean. Uses Zod v4 `stringbool` defaults. (TRUE: `true`, `1`, `yes`, `on`, `y`, `enabled` / FALSE: `false`, `0`, `no`, `off`, `n`, `disabled`) | ❌️ | ❌️ | `invalid value` |
 
 ## Tests
 
-```
-npm run test
+```bash
+npm test
 ```
 
 

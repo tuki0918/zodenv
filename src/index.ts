@@ -1,49 +1,37 @@
-import { createErrorMap, fromError } from "zod-validation-error/v4";
-import { type ZodType, z } from "zod/v4";
+import { z } from "zod";
+import { fromZodError } from "zod-validation-error";
 
-// use custom error map to automatically format messages
-// this is optional, but recommended
-// without this, zod's native error messages will be used
-z.config({
-  customError: createErrorMap({
-    includePath: true,
-  }),
-});
+type EnvSource = NodeJS.ProcessEnv | Record<string, unknown>;
 
-function validate<T extends ZodType>(
+function validate<T extends z.ZodType>(
   schema: T,
-  env: NodeJS.ProcessEnv | Record<string, string | undefined> = process.env,
-) {
+  env: EnvSource = process.env,
+): z.output<z.ZodReadonly<T>> {
   try {
     return schema.readonly().parse(env);
   } catch (err) {
-    const validationError = fromError(err, {
-      prefix: "Invalid environment variables",
-    });
-    throw validationError;
+    if (err instanceof z.ZodError) {
+      throw fromZodError(err, {
+        includePath: true,
+        prefix: "Invalid environment variables",
+      });
+    }
+
+    throw err;
   }
 }
 
-const isUndefinedOrEmpty = (v: unknown): boolean => v === undefined || v === "";
-
 // Custom Zod methods
 const envNumber = () =>
-  z.preprocess(
-    (v) => (isUndefinedOrEmpty(v) ? undefined : v),
-    z.coerce.number(),
-  );
-const envBoolean = () =>
-  z.preprocess((v) => {
-    if (isUndefinedOrEmpty(v)) return undefined;
-    if (typeof v === "string") return v.toLowerCase() === "true" || v === "1";
-    return v === true || v === 1;
-  }, z.boolean());
+  z
+    .union([z.string().trim().min(1), z.number()])
+    .pipe(z.coerce.number<string | number>());
 
 export const zenv = {
   object: z.object,
   enum: z.enum,
   string: z.string,
   number: envNumber,
-  boolean: envBoolean,
+  boolean: z.stringbool,
   validate,
 };
