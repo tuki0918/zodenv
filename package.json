@@ -1,6 +1,6 @@
 {
   "name": "@tuki0918/zodenv",
-  "version": "2.0.1",
+  "version": "1.0.0",
   "description": "A very lightweight library for validating and transforming environment variables using Zod.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
