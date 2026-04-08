@@ -14,7 +14,8 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "prepare": "husky",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ci": "vitest run",
     "test:coverage": "vitest --coverage"
   },
