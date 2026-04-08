@@ -19,7 +19,13 @@
     "test:ci": "vitest run",
     "test:coverage": "vitest --coverage"
   },
-  "keywords": [],
+  "keywords": [
+    "zod",
+    "env",
+    "environment",
+    "environment-variables",
+    "dotenv"
+  ],
   "author": "tuki0918",
   "repository": {
     "type": "git",
