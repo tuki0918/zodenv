@@ -1,5 +1,5 @@
 {
-  "name": "dotenv-zod-validator",
+  "name": "@tuki0918/zodenv",
   "version": "2.0.1",
   "description": "A very lightweight library for validating and transforming environment variables using Zod.",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
   "author": "tuki0918",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tuki0918/dotenv-zod-validator.git"
+    "url": "https://github.com/tuki0918/zodenv.git"
   },
   "license": "MIT",
   "dependencies": {
