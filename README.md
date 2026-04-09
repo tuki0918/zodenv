@@ -19,6 +19,7 @@ npm install @tuki0918/zodenv
 ```bash
 NODE_ENV="development"
 PORT="3000"
+SAMPLE_RATE="0.5"
 BOOLEAN_FLAG="true"
 __OTHER__="__other__"
 ```
@@ -30,7 +31,8 @@ import { zenv } from "@tuki0918/zodenv";
 
 const schema = zenv.object({
     NODE_ENV: zenv.enum(["development", "production", "test"]),
-    PORT: zenv.number(),
+    PORT: zenv.int(),
+    SAMPLE_RATE: zenv.number(),
     BOOLEAN_FLAG: zenv.boolean(),
     OPTIONAL_VAR: zenv.string().optional(),
 });
@@ -38,6 +40,7 @@ const schema = zenv.object({
 const ENV = zenv.validate(schema);
 // NODE_ENV: "development" (string)
 // PORT: 3000 (number)
+// SAMPLE_RATE: 0.5 (number)
 // BOOLEAN_FLAG: true (boolean)
 // OPTIONAL_VAR: undefined
 
@@ -101,6 +104,7 @@ import "@/utils/dotenv";
 | enum | Alias for `z.enum` | ❌️ | ❌️ | `invalid text` |
 | string | Alias for `z.string` | ❌️ | ✅️ | _ |
 | number | Converts to a number. | ❌️ | ❌️ | `invalid number` |
+| int | Converts to an integer. Accepts signed integer strings only. Rejects decimals, exponent notation, and non-decimal formats. | ❌️ | ❌️ | `invalid number` |
 | boolean | Converts to a boolean. Uses Zod v4 `stringbool` defaults. (TRUE: `true`, `1`, `yes`, `on`, `y`, `enabled` / FALSE: `false`, `0`, `no`, `off`, `n`, `disabled`) | ❌️ | ❌️ | `invalid value` |
 
 ## Tests

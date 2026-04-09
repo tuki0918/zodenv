@@ -2,6 +2,7 @@ import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 
 type EnvSource = NodeJS.ProcessEnv | Record<string, unknown>;
+const INT_REGEX = /^[+-]?\d+$/;
 
 function validate<T extends z.ZodType>(
   schema: T,
@@ -27,11 +28,18 @@ const envNumber = () =>
     .union([z.string().trim().min(1), z.number()])
     .pipe(z.coerce.number<string | number>());
 
+const envInt = () =>
+  z
+    .union([z.string().trim().regex(INT_REGEX), z.int()])
+    .pipe(z.coerce.number<string | number>())
+    .pipe(z.int());
+
 export const zenv = {
   object: z.object,
   enum: z.enum,
   string: z.string,
   number: envNumber,
+  int: envInt,
   boolean: z.stringbool,
   validate,
 };

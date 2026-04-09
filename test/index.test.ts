@@ -172,6 +172,50 @@ describe("zenv.number", () => {
   });
 });
 
+describe("zenv.int", () => {
+  const schema = zenv.object({
+    VALUE: zenv.int(),
+  });
+
+  test.each([
+    ["0", 0],
+    ["1", 1],
+    ["-1", -1],
+    ["+1", 1],
+    ["001", 1],
+    [1, 1],
+    [0, 0],
+    [-1, -1],
+  ])('"%s" to %s', (v, expected) => {
+    const env = { VALUE: v };
+    const result = zenv.validate(schema, env);
+    expect(result).toEqual({ VALUE: expected });
+  });
+
+  test.each([
+    [null],
+    [true],
+    [false],
+    ["true"],
+    ["false"],
+    ["x"],
+    [""],
+    [" "],
+    ["1.1"],
+    ["5."],
+    ["1e3"],
+    ["0b1010"],
+    [1.1],
+    [-1.1],
+    [undefined],
+  ])('"%s" to throw an error', (v) => {
+    const env = { VALUE: v };
+    expect(() => zenv.validate(schema, env)).toThrow(
+      /^Invalid environment variables: /,
+    );
+  });
+});
+
 describe("zenv.boolean", () => {
   const schema = zenv.object({
     VALUE: zenv.boolean(),
