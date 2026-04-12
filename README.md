@@ -92,8 +92,10 @@ export const ENV = zenv.validate(publicSchema.merge(schema));
 
 You can enforce environment variable checks when starting the Next.js server.
 
-```
-import "@/utils/dotenv";
+```typescript
+export async function register() {
+  await import("@/utils/dotenv");
+}
 ```
 
 ## Custom Helpers
